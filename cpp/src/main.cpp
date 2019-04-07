@@ -3,12 +3,18 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <sstream>
+#include <chrono>
+#include <thread>
 
-constexpr auto COMMAND_PIPE = "/var/interop-volume/pipe.fifo";
+constexpr auto PIPE_VOLUME = "/var/interop-volume";
 
 int main() {
-    pid_t fifo = mkfifo(COMMAND_PIPE, 666);
+    std::stringstream ss;
+    ss << PIPE_VOLUME << "/command.fifo";
+    pid_t fifo = mkfifo(ss.str().c_str(), 666);
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     close(fifo);
-    unlink(COMMAND_PIPE);
+    unlink(ss.str().c_str());
     return 1;
 }
