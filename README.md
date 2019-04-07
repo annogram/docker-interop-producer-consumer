@@ -26,6 +26,8 @@ Consider a Server application and 2 client applications. Servers will be created
 
 ### Psuedocode
 
+This is pretty much the end goal of what i want people to be able to do.
+
 **CLIENT**
 ```python
 import hydra
@@ -43,12 +45,27 @@ connection.post("/controller/action", data=packet)
 **SERVER**
 ```c#
 using hydra;
-using hydra.connectionTyppes;
+using hydra.connectionTypes;
 
+[HydraController("/controller")]
 public class HydraProducer {
     
+    [HydraGet("/action")]
+    public int times2(){
+        return 1;
+    }
 
+    [HydraPost("/action")]
+    public int times2(Json j) {
+        return j.someOtherValue * 2;
+    }
     
+}
+
+public static void main(string[] args) {
+    HydraProducer producer;
+    HydraConnection connection = hydra.createCrudSever(producer);
+    connection.open();
 }
 
 
