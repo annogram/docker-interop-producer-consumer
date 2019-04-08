@@ -7,9 +7,6 @@ services:
       - "./python/src:/usr/src"
     build:
       context: ./python
-    ports:
-      - 80:80
-      - 433:433
   producer:
     container_name: pipe_producer
     volumes:

@@ -6,7 +6,6 @@ hydra::server::server()
 {
     std::stringstream ss;
     ss << PIPE_VOLUME << "/command.fifo";
-    std::cout << ss.str() << std::endl;
     command_pipe = ss.str();
 }
 
@@ -14,7 +13,6 @@ hydra::server::~server() {}
 
 pid_t hydra::server::startup()
 {
-    std::cout << command_pipe << std::endl;
     command_fifo = mkfifo(command_pipe.c_str(), 666);
     return command_fifo;
 }
