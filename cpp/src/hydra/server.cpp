@@ -1,7 +1,8 @@
 #include "server.h"
 #include <iostream>
+#include <thread>
 
-hydra::server::server(/* args */)
+hydra::server::server()
 {
     std::stringstream ss;
     ss << PIPE_VOLUME << "/command.fifo";
@@ -9,11 +10,10 @@ hydra::server::server(/* args */)
     command_pipe = ss.str();
 }
 
-hydra::server::~server()
-{
-}
+hydra::server::~server() {}
 
-pid_t hydra::server::startup(){
+pid_t hydra::server::startup()
+{
     std::cout << command_pipe << std::endl;
     command_fifo = mkfifo(command_pipe.c_str(), 666);
     return command_fifo;
