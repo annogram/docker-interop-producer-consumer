@@ -3,17 +3,16 @@ services:
   consumer:
     container_name: pipe_consumer
     volumes:
-      - "./interop-volume:/var/interop-volume"
+      - "interop-volume:/var/interop-volume"
       - "./python/src:/usr/src"
     build:
       context: ./python
-    ports:
-      - 80:80
-      - 433:433
   producer:
     container_name: pipe_producer
     volumes:
-      - "./interop-volume:/var/interop-volume"
+      - "interop-volume:/var/interop-volume"
       - "./cpp/src:/usr/src"
     build:
       context: ./cpp
+volumes:
+  interop-volume:
