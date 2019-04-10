@@ -1,3 +1,6 @@
+#if !defined(HYDRA_SERVER_H)
+#define HYDRA_SERVER_H
+
 #include <sstream>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -22,3 +25,5 @@ public:
 };
 
 } // namespace hydra
+
+#endif // HYDRA_SERVER_H
