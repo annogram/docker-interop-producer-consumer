@@ -7,7 +7,7 @@
 #include <string>
 #include <list>
 
-constexpr auto PIPE_VOLUME = "/var/interop-volume";
+constexpr const char *PIPE_VOLUME = "/var/interop-volume/cpp_server";
 
 namespace hydra
 {
@@ -22,15 +22,16 @@ public:
   }
   virtual char const *what() const noexcept { return _msg.c_str(); }
 };
+
 class server
 {
 private:
-  pid_t _commandFifo;
-  std::string _commandPipe;
-  std::thread commandWatcher;
-  void watcher();
+  int _watcherThreadId;
+  bool _listening = false;
+  std::thread _watcher;
+  void WatcherFunc();
 public:
-  server(/* args */);
+  server(std::string path = PIPE_VOLUME);
   ~server();
   pid_t startup();
   void shutdown();
