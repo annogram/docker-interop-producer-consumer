@@ -1,5 +1,6 @@
 #include "server.h"
 #include <iostream>
+#include <fstream>
 #include <sstream>
 #include <unistd.h>
 #include <fcntl.h>
@@ -15,19 +16,15 @@ hydra::server::~server() {}
 
 void hydra::server::watcher()
 {
-    pid_t pipe_id;
-    int num;
-    char value[300];
-    std::cout << "Awaiting a client" << std::endl;
-    pipe_id = open(_commandPipe.c_str(), O_RDONLY);
-    std::cout << "Found a client" << std::endl;
-    do {
-        if((num = read(pipe_id, value, sizeof(value))) == -1){
-            throw hydra::OpenSocketException("Could not read from pipe");
-        }else{
-            std::cout << value << std::endl;
-        }
-    } while(num > 0);
+    std::fstream fstream(_commandPipe);
+    std::string datum;
+    std::cout << "Reading from pipe" << std::endl;
+    
+    while(fstream >> datum){
+        std::cout <<"In read looop" << std::endl;
+        std::cout << datum << std::endl;
+    }
+    std::cout << "Finished reading from pipe" << std::endl;
 }
 
 pid_t hydra::server::startup()

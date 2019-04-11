@@ -22,6 +22,7 @@ public:
   }
   virtual char const *what() const noexcept { return _msg.c_str(); }
 };
+
 class server
 {
 private:
@@ -29,6 +30,7 @@ private:
   std::string _commandPipe;
   std::thread commandWatcher;
   void watcher();
+
 public:
   server(/* args */);
   ~server();
