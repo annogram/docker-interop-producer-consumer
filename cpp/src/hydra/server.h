@@ -6,6 +6,8 @@
 #include <thread>
 #include <string>
 #include <list>
+#include <fstream>
+
 
 constexpr auto PIPE_VOLUME = "/var/interop-volume";
 
@@ -28,9 +30,10 @@ class server
 private:
   pid_t _commandFifo;
   std::string _commandPipe;
+  std::fstream _stream;
   std::thread commandWatcher;
   void watcher();
-  bool _go;
+  bool _go = false;
 public:
   server(/* args */);
   ~server();

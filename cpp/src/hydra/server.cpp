@@ -15,11 +15,11 @@ hydra::server::~server() {}
 
 void hydra::server::watcher()
 {
-    std::fstream fstream(_commandPipe);
+    _stream = std::fstream(_commandPipe);
     std::string datum;
     std::cout << "Reading from pipe" << std::endl;
     do {
-        fstream >> datum;
+        _stream >> datum;
         std::cout <<"In read looop" << std::endl;
         std::cout << datum << std::endl;
         if(datum == "s")
@@ -33,8 +33,8 @@ pid_t hydra::server::startup()
 {
     std::cout << "Opening command pipe" << std::endl;
     _commandFifo = mkfifo(_commandPipe.c_str(), 0666);
-    commandWatcher = std::thread(&hydra::server::watcher, this);
     _go = true;
+    commandWatcher = std::thread(&hydra::server::watcher, this);
     return _commandFifo;
 }
 
