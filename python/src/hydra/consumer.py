@@ -10,5 +10,5 @@ class Client(object):
             time.sleep(2)
             for _ in range(1,111):
                 command_pipe.writelines('yeahnah\n')
-            command_pipe.writelines('s\n')
+            # command_pipe.writelines('s\n')
             
