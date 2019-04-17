@@ -17,23 +17,19 @@ void hydra::server::watcher()
 {
     _stream = std::fstream(_commandPipe);
     std::string datum;
-    std::cout << "Reading from pipe" << std::endl;
     do {
         _stream >> datum;
-        // std::cout <<"In read looop" << std::endl;
         std::cout << datum << std::endl;
         if(datum == "s")
             _go = false;
 
     } while (_go);
-    std::cout << "Finished reading from pipe" << std::endl;
     std::list<int> list;
     
 }
 
 pid_t hydra::server::startup()
 {
-    std::cout << "Opening command pipe" << std::endl;
     _commandFifo = mkfifo(_commandPipe.c_str(), 0666);
     _go = true;
     commandWatcher = std::thread(&hydra::server::watcher, this);
@@ -42,11 +38,7 @@ pid_t hydra::server::startup()
 
 void hydra::server::shutdown()
 {
-    std::cout << "Calling shutdown" << std::endl;
     _stream.close();
-    // close(_commandFifo);
     commandWatcher.detach();
-    // commandWatcher.join();
-    std::cout << "Thread closed sucessfully" << std::endl;
     unlink(_commandPipe.c_str());
 }
