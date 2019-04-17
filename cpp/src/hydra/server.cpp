@@ -1,6 +1,5 @@
 #include "server.h"
 #include <iostream>
-#include <fstream>
 #include <sstream>
 #include <unistd.h>
 #include <fcntl.h>
@@ -19,11 +18,14 @@ void hydra::server::watcher()
     std::fstream fstream(_commandPipe);
     std::string datum;
     std::cout << "Reading from pipe" << std::endl;
-    
-    while(fstream >> datum){
+    do {
+        fstream >> datum;
         std::cout <<"In read looop" << std::endl;
         std::cout << datum << std::endl;
-    }
+        if(datum == "s")
+            _go = false;
+
+    } while (_go);
     std::cout << "Finished reading from pipe" << std::endl;
 }
 
@@ -32,6 +34,7 @@ pid_t hydra::server::startup()
     std::cout << "Opening command pipe" << std::endl;
     _commandFifo = mkfifo(_commandPipe.c_str(), 0666);
     commandWatcher = std::thread(&hydra::server::watcher, this);
+    _go = true;
     return _commandFifo;
 }
 

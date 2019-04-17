@@ -30,7 +30,7 @@ private:
   std::string _commandPipe;
   std::thread commandWatcher;
   void watcher();
-
+  bool _go;
 public:
   server(/* args */);
   ~server();
