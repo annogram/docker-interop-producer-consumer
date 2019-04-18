@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
 from hydra.consumer import Client
+from hydra.messages import Request
 
-Client()
+c = Client()
+c.send(Request.GET)
