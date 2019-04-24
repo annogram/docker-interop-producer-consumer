@@ -11,9 +11,9 @@ class Client(object):
         self.pipe_path = command_pipe_path
       
     def send(self, request_type=Request, data=None):
-        startup = Request.GET.value
+        startup = request_type.value
         startup['sender'] = str(self.client_id)
         with open(self.pipe_path, 'w') as command_pipe:
-            msg = json.dumps(startup, indent=None)
+            msg = json.dumps(startup, indent=None) + '\n'
             print (msg)
-            command_pipe.write(msg)
+            command_pipe.writelines(msg)

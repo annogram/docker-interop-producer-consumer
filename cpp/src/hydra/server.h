@@ -32,6 +32,7 @@ private:
   std::string _commandPipe;
   std::ifstream _stream;
   std::thread commandWatcher;
+  bool _done;
   void watcher();
 public:
   Server(/* args */);
