@@ -25,7 +25,7 @@ public:
   virtual char const *what() const noexcept { return _msg.c_str(); }
 };
 
-class server
+class Server
 {
 private:
   pid_t _commandFifo;
@@ -35,8 +35,8 @@ private:
   void watcher();
   bool _go = false;
 public:
-  server(/* args */);
-  ~server();
+  Server(/* args */);
+  ~Server();
   pid_t startup();
   void shutdown();
 };

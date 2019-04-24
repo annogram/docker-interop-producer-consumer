@@ -4,7 +4,7 @@
 
 int main()
 {
-    hydra::server server;
+    hydra::Server server;
     server.startup();
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
     server.shutdown();

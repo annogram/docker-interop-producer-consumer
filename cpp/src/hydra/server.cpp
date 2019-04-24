@@ -3,17 +3,18 @@
 #include <sstream>
 #include <unistd.h>
 #include <fcntl.h>
+#include "./messages.h"
 
-hydra::server::server()
+hydra::Server::Server()
 {
     std::stringstream ss;
     ss << PIPE_VOLUME << "/command.fifo";
     _commandPipe = ss.str();
 }
 
-hydra::server::~server() {}
+hydra::Server::~Server() {}
 
-void hydra::server::watcher()
+void hydra::Server::watcher()
 {
     _stream = std::fstream(_commandPipe);
     std::string datum;
@@ -26,18 +27,20 @@ void hydra::server::watcher()
             out << datum;
 
     } while (_go);
+    auto message = Message::ParseMessage(out.str());
+    // auto type = message->type;
     std::cout << out.str() << std::endl;
 }
 
-pid_t hydra::server::startup()
+pid_t hydra::Server::startup()
 {
     _commandFifo = mkfifo(_commandPipe.c_str(), 0666);
     _go = true;
-    commandWatcher = std::thread(&hydra::server::watcher, this);
+    commandWatcher = std::thread(&hydra::Server::watcher, this);
     return _commandFifo;
 }
 
-void hydra::server::shutdown()
+void hydra::Server::shutdown()
 {
     _go = false;
     _stream.close();
