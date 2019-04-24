@@ -16,20 +16,16 @@ hydra::Server::~Server() {}
 
 void hydra::Server::watcher()
 {
-    _stream = std::fstream(_commandPipe);
+    _stream = std::ifstream(_commandPipe);
     std::string datum;
-    std::stringstream out;
-    do {
-        _stream >> datum;
-        if(datum == "s")
-            _go = false;
-        else
-            out << datum;
+    while (std::getline(_stream, datum))
+    {
+        auto message = Message::ParseMessage(datum);
+        std::cout << datum << std::endl;    
+    }
+    
 
-    } while (_go);
-    auto message = Message::ParseMessage(out.str());
     // auto type = message->type;
-    std::cout << out.str() << std::endl;
 }
 
 pid_t hydra::Server::startup()
@@ -43,7 +39,6 @@ pid_t hydra::Server::startup()
 void hydra::Server::shutdown()
 {
     _go = false;
-    _stream.close();
     commandWatcher.detach();
     unlink(_commandPipe.c_str());
 }

@@ -14,7 +14,6 @@ class Client(object):
         startup = Request.GET.value
         startup['sender'] = str(self.client_id)
         with open(self.pipe_path, 'w') as command_pipe:
-            msg = json.dumps(startup, indent=None) + '\n'
+            msg = json.dumps(startup, indent=None)
             print (msg)
             command_pipe.write(msg)
-            command_pipe.writelines('s\n')

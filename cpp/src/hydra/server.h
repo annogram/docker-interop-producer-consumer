@@ -30,7 +30,7 @@ class Server
 private:
   pid_t _commandFifo;
   std::string _commandPipe;
-  std::fstream _stream;
+  std::ifstream _stream;
   std::thread commandWatcher;
   void watcher();
   bool _go = false;
