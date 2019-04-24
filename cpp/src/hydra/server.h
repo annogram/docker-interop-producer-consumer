@@ -33,7 +33,6 @@ private:
   std::ifstream _stream;
   std::thread commandWatcher;
   void watcher();
-  bool _go = false;
 public:
   Server(/* args */);
   ~Server();
