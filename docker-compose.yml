@@ -1,20 +1,20 @@
 version: "2"
 services:
-  producer:
-    container_name: pipe_producer
+  cpp_server:
+    container_name: cpp_server
     volumes:
       - "interop-volume:/var/interop-volume"
       - "./cpp/src:/usr/src"
     build:
       context: ./cpp
-  consumer:
-    container_name: pipe_consumer
+  python_client:
+    container_name: python_client
     volumes:
       - "interop-volume:/var/interop-volume"
       - "./python/src:/usr/src"
     build:
       context: ./python
     depends_on:
-      - producer
+      - cpp_server
 volumes:
   interop-volume:
