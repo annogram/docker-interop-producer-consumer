@@ -20,7 +20,7 @@ enum class MessageType
 class Message
 {
 public:
-    Message(std::string path, std::string sender);
+    Message(const std::string& path, const std::string& sender);
     Message(const Message& message);
     ~Message();
     std::string _sender;
@@ -28,7 +28,7 @@ public:
     std::string _path;
     MessageType type;
     rapidjson::Document data;
-    static const Message ParseMessage(std::string message);
+    static const Message ParseMessage(const std::string& message);
 };
 } // namespace hydra
 #endif // MESSAGES_H

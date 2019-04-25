@@ -1,6 +1,6 @@
 #include "messages.h"
 
-hydra::Message::Message(std::string path, std::string sender) : _path(path), _sender(sender)
+hydra::Message::Message(const std::string& path, const std::string& sender) : _path(path), _sender(sender)
 {
 }
 
@@ -12,7 +12,7 @@ hydra::Message::~Message()
 {
 }
 
-const hydra::Message hydra::Message::ParseMessage(std::string raw)
+const hydra::Message hydra::Message::ParseMessage(const std::string& raw)
 {
     rapidjson::Document parsedMessage;
     parsedMessage.Parse(raw.c_str());
